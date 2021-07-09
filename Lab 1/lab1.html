@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+
+<html>
+
+	<head>
+
+		<meta charset = "UTF-8">
+		<title>lab1.html</title>
+
+    <style>
+
+			.red
+			{
+				background-color: red;
+			}
+
+			.invisibleDiv
+			{
+				display: none;
+			}
+
+			.invisibleSuccess
+			{
+				display: none;
+			}
+
+			.invisibleBlankMessage
+			{
+				display: none;
+			}
+
+			.errorMessageColor
+			{
+				color: blue;
+			}
+
+			.successMessageColor
+			{
+				text-align: center;
+				height: 30px;
+				width: 10%;
+				background-color: green;
+				color: white;
+			}
+
+			.blankMessageColor
+			{
+				color: orange;
+			}
+
+    </style>
+
+		<script type = "text/javascript">
+
+			var username;								// Global variables
+			var password;
+			var studentID;
+			var wordCountDown;
+			var submitButton;
+			var page;
+			var successDiv;
+			var usernameError;
+			var studentIDError;
+			var validUsername = true;
+			var validPassword = true;
+			var validStudentID = true;
+
+
+			function checkUsername()		// Called once any key is released in the username text entry field
+			{
+
+				var pattern = /^[a-zA-Z]*$/;		// Regular expression pattern for upper and lower cased letters
+
+				if (pattern.test(username.value))		// Tests for a match between the previously initalized pattern and the username input
+				{
+ 					if (!validUsername)
+ 					{
+	 					validUsername = true;
+						usernameError.classList.add("invisibleDiv");		// If the pattern matches the input, we set the validUsername boolean to true and add the
+ 					}																									// attributes of the invisibleDiv class to hide the username error message
+				}
+				else
+				{
+ 					if (validUsername)																	// In the case that the pattern does not match the input, we set the validUsername boolean to false and remove the
+ 					{																										// attributes of the invisibleDiv class to display the username error message
+	 					validUsername = false;
+						usernameError.classList.remove("invisibleDiv");
+ 					}
+				}
+
+				pageValid();		// Calls pageValid function once username check has concluded
+
+			}
+
+			function checkUpperCase(password)		// Function to check for one or more upper cased letters within the typed password entry
+			{
+
+			  if (password.toLowerCase() == password)		// If the user's password value is equivalent to the password value converted by the toLowerCase
+				{																					// method then that means the user did not input any upper cased letters
+			  	return false;
+			  }									// In that case, we return false
+			  else
+				{
+			   	return true;		// Otherwise, we return true
+			  }
+
+			}
+
+			function checkLowerCase(password)		// Function to check for one or more lower cased letters within the typed password entry
+			{
+
+				if (password.toUpperCase() == password)		// If the user's password value is equivalent to the password value converted by the toUpperCase
+			  {																					// method then that means the user did not input any lower cased letters
+			    return false;
+			  }										// In that case, we return false
+			  else
+			  {
+			    return true;			// Otherwise, we return true
+				}
+
+			}
+
+			function checkNumber(password)	// Function to check for one or more numbers within the typed password entry
+			{
+
+			  var pattern = /\d+/;		// Regular expression pattern for one or more digits between 0 and 9
+
+				if (pattern.test(password))		// Tests for a match between the previously initalized pattern and the password input
+			  {
+			    return true;		// If the pattern matches the input, we return true
+			 	}
+			  else
+			  {
+			    return false;		// If the pattern does not match the input, we return false
+			  }
+
+			}
+
+			function checkPassword()		// Called in the event of the user focusing the keyboard away from the password text entry field
+			{
+				if (checkUpperCase(password.value) == true && checkLowerCase(password.value) == true && checkNumber(password.value) == true)		// If the values of each respective character check function return true
+				{
+					if (!validPassword)
+					{
+						validPassword = true;
+						passwordError.classList.add("invisibleDiv");		// If the pattern matches the input, we set the validPassword boolean to true and add the
+					}																									// attributes of the invisibleDiv class to hide the password error message
+				}
+				else
+				{
+					if(validPassword)																	// In the case that the pattern does not match the input, we set the validPassword boolean to false and remove the
+					{																									// attributes of the invisibleDiv class to display the password error message
+						validPassword = false;
+						passwordError.classList.remove("invisibleDiv");
+					}
+				}
+
+				pageValid();		// Calls pageValid function once password check has concluded
+
+			}
+
+			function checkNumericStudentID()		// Called in the event of the user focusing the keyboard away from the student ID text entry field
+			{
+
+				var pattern = /^[0-9]*$/;			// Regular expression pattern for input only accepting digits between 0 and 9
+
+				if (pattern.test(studentID.value) && studentID.value.length == 9)
+				{
+			    if (!validStudentID)
+					{
+						validStudentID = true;															// If the pattern matches the input and the length of the input is exactly 9 digits, we set the validStudentID
+						studentIDError.classList.add("invisibleDiv");				// boolean to true and add the attributes of the invisibleDiv class to hide the student ID error message
+					}
+			  }
+			  else
+				{
+			  	if (validStudentID)
+					{
+						validStudentID = false;																// In the case that the pattern does not match the input, we set the validStudentID boolean to false and remove the
+						studentIDError.classList.remove("invisibleDiv");			// attributes of the invisibleDiv class to display the student ID error message
+					}
+			  }
+
+				pageValid();		// Calls pageValid function once student ID check has concluded
+
+			}
+
+			function pageValid()		// Called at the end of each of the three individual functions checking for valid username, password, and student ID entries
+			{
+				if (validUsername == true && validPassword == true && validStudentID == true)			// If the boolean values for all the validity checks return true
+				{
+					page.classList.remove("red");			// We remove the red background color which signifies a valid page
+
+				}
+				else
+				{
+					page.classList.add("red");				// We add the red background color which signifies an invalid page
+				}
+			}
+
+			function checkWordCount()		// Called once a key is released in the user message text area
+			{
+
+				var currentString = userMessage.value;
+				var tokens = currentString.split(" ");		// Splitting a string into an array of substrings, separated between each word
+				var numOfWords = tokens.length;
+				wordCountDown.innerHTML = 25 - numOfWords;		// As words begin to add up, we subtract the number of words from the initial remaining words value of 25
+
+				if (currentString == "")			// If the current string is empty within the user message text area
+				{
+					wordCountDown.innerHTML = 25;		// the words remaining countdown resets to 25
+				}
+
+				if (wordCountDown.innerHTML < 0)		// If the words remaining countdown ends up being less than 0
+				{
+					document.getElementById("userMessage").disabled = true;		// We disable the user message text area and make sure
+  				wordCountDown.innerHTML = 0;															// that the words remaining countdown is set to 0
+				}
+
+			}
+
+		function buttonClicked()		// Called once the submit button is clicked
+		{
+				if ((validUsername == true && validPassword == true && validStudentID == true) && !(username.value == "" || password.value == "" || studentID.value == ""))
+				{
+					successDiv.classList.remove("invisibleSuccess");				// If all validity check booleans return true and none of the values for those fields are empty
+					blankEntries.classList.add("invisibleBlankMessage");		// we display the success message and hide the blank entry error message
+				}
+				else if (username.value == "" || password.value == "" || studentID.value == "")
+				{
+					blankEntries.classList.remove("invisibleBlankMessage");					// Else if one or more of the values for the fields are empty
+					successDiv.classList.add("invisibleSuccess");										// we display the blank entry error message and hide the success message
+				}
+				else
+				{
+					blankEntries.classList.add("invisibleBlankMessage");					// In any other case, we hide both the success message and blank entry error message
+					successDiv.classList.add("invisibleSuccess");
+				}
+			}
+
+			function clearValues()			// Clears all text values of the entries for the username, password, student ID, and the user typed message
+			{														// This allows for a fully blank form upon the request of a refresh
+
+				username.value = "";
+				password.value = "";
+				studentID.value = "";
+				userMessage.value = "";
+
+			}
+
+			function init()		// the initial function is called when the window loads
+			{
+
+					username = document.getElementById("username");					// getElementById() retrieves an element with an ID that is identical
+					password = document.getElementById("password");					// to the specified string and assigns it to an appropriately named variable
+					studentID = document.getElementById("studentID");
+					wordCountDown = document.getElementById("wordCountDown");
+					submitButton = document.getElementById("submitButton");
+					page = document.getElementById("page");
+					usernameError = document.getElementById("usernameError");
+					studentIDError = document.getElementById("studentIDError");
+					successDiv = document.getElementById("successDiv");
+					blankEntries = document.getElementById("blankEntries");
+
+					submitButton.addEventListener("click", buttonClicked);			// Calls the buttonClicked function once the submit button is clicked
+					userMessage.addEventListener("keyup", checkWordCount);			// Calls checkWordCount function once a key is released in the user message text area
+					password.addEventListener("blur", checkPassword);						// Calls checkPassword function in the event of the user focusing the keyboard away from the password text entry field
+					studentID.addEventListener("blur", checkNumericStudentID);	// Calls checkNumericStudentID function in the event of the user focusing the keyboard away from the student ID text entry field
+					username.addEventListener("keyup", checkUsername);					// Calls checkUsername function once any key is released in the username text entry field
+
+					clearValues();		// Final call to execute is to the clearValues function
+
+			}
+
+			window.addEventListener("load", init);		// Executes once the full page comprised of the html and css has loaded
+
+		</script>
+
+	</head>
+
+	<body>
+
+		<div id = "page">
+
+				<form method = "get" action = "#">
+
+						<label>Username:
+								<input id = "username" type = "text">
+						</label>
+
+      			<br><br><br>
+
+						<label>Password:
+								<input id = "password" type = "password">
+						</label>
+
+      			<br><br><br>
+
+						<label>Student ID Number (Enter 9 Digits):
+								<input type = "text" id = "studentID">
+						</label>
+
+      			<br><br><br>
+
+						<label>Enter Message Here (25 Words Maximum):
+						<br><br>
+						Words Remaining: <span id = "wordCountDown">25</span>
+						<br><br>
+								<textarea id = "userMessage" type = "textarea" rows = "10" cols = "50"></textarea>
+						</label>
+
+      			<br><br>
+
+						<input id = "submitButton" type = "button" value = "Submit">
+
+						<div class = "errorMessageColor">
+
+								<br>
+
+								<span id = "usernameError" class = "invisibleDiv">Invalid Username (Please enter only uppper or lower cased letters)</span>
+
+								<br>
+
+								<span id = "passwordError" class = "invisibleDiv">Invalid Password (Please have at least one upper cased letter, one lower cased letter, and one number)</span>
+
+								<br>
+
+								<span id = "studentIDError" class = "invisibleDiv">Invalid Student ID (Please enter a nine digit number)</span>
+
+						</div>
+
+						<div id = "successDiv" class = "invisibleSuccess successMessageColor">
+
+							<h3><em>SUCCESS!</em></h3>
+
+						</div>
+
+						<br><br><br>
+
+						<div>
+
+							<span id = "blankEntries" class = "invisibleBlankMessage blankMessageColor">One or more input fields has been left blank. Please make sure to have a correct username, password, and student ID before clicking the submit button.</span>
+
+						</div>
+
+					</form>
+
+				</div>
+
+	</body>
+
+</html>
