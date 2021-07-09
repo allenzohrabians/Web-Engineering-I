@@ -1,0 +1,123 @@
+/*lab0B.css*/
+
+body {
+          background-color: #00008B;
+     }
+
+.white_box {
+                width: 1200px;
+                height: 2200px;
+                background-color: white;
+                margin-left: 20px;
+                margin-right: 20px;
+                border: 3px solid black;
+            }
+
+.blog_header {
+                margin-right: 100px;
+                width: 1140px;
+                height: 130px;
+                background-color: #90EE90;
+                border: 3px solid black;
+                position: relative;
+                top: 20px;
+                left: 27px;
+                font-family: sans-serif, helvetica, arial;
+                text-align: center;
+                text-indent: 34em;
+              }
+
+.friends_box {
+                text-indent: 1.0em;
+                width: 350px;
+                height: 350px;
+                background-color: red;
+                border: 3px solid black;
+                position: relative;
+                left: 27px;
+                top: 40px;
+                color: white;
+                text-align: left;
+                font-size: large;
+                font-family: sans-serif, helvetica, arial;
+                text-decoration: none;
+                float: left;
+                display: inline;
+              }
+
+.blog_entry_initial {
+                      width: 760px;
+                      height: 275px;
+                      background-color: #DDA0DD;
+                      border: 3px solid black;
+                      position: relative;
+                      top: 40px;
+                      left: 28px;
+                      margin-bottom: 80px;
+                      margin-left: 380px;
+                      color: black;
+                      text-align: justify;
+                    }
+
+.blog_entry_new {
+                  width: 760px;
+                  height: 275px;
+                  background-color: #DDA0DD;
+                  border: 3px solid black;
+                  position: relative;
+                  margin-bottom: 40px;
+                  left: 410px;
+                  color: black;
+                  text-align: justify;
+                }
+
+a {
+    color: white;
+    text-decoration: none;
+  }
+
+a:hover {
+          color:#8B0000;
+        }
+
+h2  {
+      font-size: x-large;
+    }
+
+p {
+    font-size: 100%;
+    margin-left: 1%;
+    padding-right: 10%;
+
+  }
+
+img {
+      display: inline-block;
+      margin-right: 8px;
+      margin-left: 10px;
+      float: right;
+    }
+
+#entry_1 {
+            position: relative;
+         }
+
+#entry_2 {
+            position: relative;
+         }
+
+#entry_3 {
+            position: relative;
+         }
+
+#entry_4 {
+            position: relative;
+         }
+
+#entry_5 {
+            position: relative;
+         }
+
+#entry_6 {
+            position: relative;
+         }
